@@ -33,4 +33,12 @@
         android:id="@+id/btn2"
         android:layout_alignTop="@+id/btn1"
         android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vai Vecchio"
+        android:id="@+id/btnnext"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

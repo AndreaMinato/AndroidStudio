@@ -45,10 +45,10 @@ public class Dialog2 extends DialogFragment {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setTitle(getArguments().getString(TITLE))
-        .setItems(getArguments().getCharSequenceArray(TEXT), new DialogInterface.OnClickListener() {
+        .setItems(getArguments().getStringArray(TEXT), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                listener.OnItemSelected("Premuto n" + which);
+                listener.OnItemSelected(getArguments().getStringArray(TEXT)[which]);
             }
         });
 
@@ -57,15 +57,15 @@ public class Dialog2 extends DialogFragment {
 
 
     public static Dialog2 getInstance() {
-        return getInstance("Title", new String[]{"Text1", "Text2"});
+        return getInstance("Title", new String[]{"Text1", "Text2", "Text3"});
     }
 
-    public static Dialog2 getInstance(String title, CharSequence[] text) {
+    public static Dialog2 getInstance(String title, String[] text) {
 
         Dialog2 dialog = new Dialog2();
         Bundle bundle = new Bundle();
         bundle.putString(TITLE, title);
-        bundle.putCharSequenceArray(TEXT, text);
+        bundle.putStringArray(TEXT, text);
         dialog.setArguments(bundle);
         return dialog;
     }

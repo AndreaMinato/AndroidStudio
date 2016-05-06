@@ -21,6 +21,7 @@ public class DetailFragment extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putString(BUNDLE, aValue);
         detailFragment.setArguments(bundle);
+
         return detailFragment;
     }
 

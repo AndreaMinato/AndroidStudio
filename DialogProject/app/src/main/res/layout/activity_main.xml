@@ -22,21 +22,21 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:text="Button 1"
+        android:text="Simple"
         android:id="@+id/btn1"
         android:layout_weight="1" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:text="Button 2"
+        android:text="List"
         android:id="@+id/btn2"
         android:layout_weight="1" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:text="Button 3"
+        android:text="Check"
         android:id="@+id/btn3"
         android:layout_weight="1" />
 </LinearLayout>

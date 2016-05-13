@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements Dialog1.IOnDialog
 
     @Override
     public void OnItemSelected(String str) {
+        Log.i("OnItemSelected: ", str);
         txtTitle.setText(str);
     }
 

@@ -9,6 +9,8 @@ public class MainApp extends Application {
 
     private static MainApp instance;
 
+    public int anInt;
+
     public static MainApp get() {
         return instance;
     }
@@ -17,6 +19,14 @@ public class MainApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-        instance=this;
+        instance = this;
+
+        initForTest();
+    }
+
+    private void initForTest(){
+
+        anInt=456;
+        //popolo il mio DB
     }
 }

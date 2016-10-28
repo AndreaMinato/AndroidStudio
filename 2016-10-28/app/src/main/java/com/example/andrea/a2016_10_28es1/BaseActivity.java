@@ -105,7 +105,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected void launchB() {
         Intent intent = new Intent(this, ActivityB.class);
-
+        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 

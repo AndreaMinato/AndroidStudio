@@ -16,7 +16,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ActivityA" />
-        <activity android:name=".ActivityB" />
+        <activity android:name=".ActivityB" android:taskAffinity="com.actB"/>
         <activity android:name=".ActivityC" />
         <activity android:name=".ActivityD" />
     </application>

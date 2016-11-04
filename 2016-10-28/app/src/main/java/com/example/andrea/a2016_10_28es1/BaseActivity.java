@@ -98,7 +98,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected void launchA() {
         Intent intent = new Intent(this, ActivityA.class);
-
+        //intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
 
     }

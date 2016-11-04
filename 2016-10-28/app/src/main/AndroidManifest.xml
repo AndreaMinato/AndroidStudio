@@ -15,8 +15,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ActivityA" />
-        <activity android:name=".ActivityB" android:taskAffinity="com.actB"/>
+        <activity android:name=".ActivityA" android:taskAffinity="com.esercizio.activity"/>
+        <!--android:launchMode="singleInstance"-->
+        <activity android:name=".ActivityB"  android:taskAffinity="com.esercizio.activity"/>
         <activity android:name=".ActivityC" />
         <activity android:name=".ActivityD" />
     </application>

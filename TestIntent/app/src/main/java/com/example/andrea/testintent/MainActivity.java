@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         intent.setType(ContactsContract.Contacts.CONTENT_TYPE);
 
         if (intent.resolveActivity(getPackageManager()) != null)
-            startActivity(intent,PICK_CONTACT_CODE);
+            startActivityForResult(intent,PICK_CONTACT_CODE);
     }
 
     private void clickSms() {

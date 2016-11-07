@@ -13,6 +13,11 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.HOME" />
+                
+
             </intent-filter>
         </activity>
         <activity android:name=".WebActivity">
@@ -20,7 +25,10 @@
 
                 <!-- sempre per l'ascolto dei link -->
                 <data android:scheme="https" />
-                 <data android:scheme="http" android:host="www.apple.com"/>
+                <data
+                    android:host="www.apple.com"
+                    android:scheme="http" />
+
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <action android:name="android.intent.action.VIEW" />
@@ -34,7 +42,7 @@
 
                 <action android:name="android.intent.action.SEND" />
 
-                <data android:mimeType="text/plain"/>
+                <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
     </application>

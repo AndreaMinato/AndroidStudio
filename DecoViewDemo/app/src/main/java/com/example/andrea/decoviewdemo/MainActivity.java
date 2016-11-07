@@ -22,18 +22,30 @@ public class MainActivity extends AppCompatActivity {
         DecoView subjectsArcView = (DecoView) findViewById(R.id.subjectsArcView);
 
         Subject subjects[] = {
-                new Subject("Math", "#0097A7", 6.7f),
-                new Subject("English", "#00796B", 9.2f),
-                new Subject("IT", "#E0796B", 8.4f),
-                new Subject("History", "#12DF5B", 2f),
-                new Subject("Chemestry", "#FFC107", 4.8f)
+                new Subject("Metematica", "#0097A7", 6.7f),
+                new Subject("Inglese", "#00796B", 9.2f),
+                new Subject("Informatica.", "#E0796B", 8.4f),
+                new Subject("Italiano", "#12DF5B", 2f),
+                new Subject("Educazione Fisica", "#3527FF", 5.3f),
+                new Subject("Sistemi", "#FF9629", 8.2f),
+                new Subject("Calcolo", "#009CFF", 7.1f),
+                new Subject("Chimica", "#0C660C", 4.2f),
+                new Subject("Fisica", "#013F38", 10f),
+                new Subject("Elettronica", "#FFC107", 4.8f)
         };
+        float linewidth = 30f;
 
+        setupArcView(subjectsArcView, subjects, linewidth);
+
+
+
+    }
+
+    private void setupArcView(DecoView subjectsArcView, Subject[] subjects, float linewidth) {
         int[] seriesIndex = new int[100];
-        float linewidth = 50f;
 
         // Create background track
-        subjectsArcView.addSeries(new SeriesItem.Builder(Color.argb(255, 255, 255, 255))
+        subjectsArcView.addSeries(new SeriesItem.Builder(Color.parseColor("#FFFFFF"))
                 .setRange(0, 10, 10)
                 .setInitialVisibility(false)
                 .setLineWidth(linewidth * subjects.length)
@@ -68,3 +80,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
+
+

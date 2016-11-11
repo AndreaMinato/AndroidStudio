@@ -25,10 +25,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initDB() {
-        alchools = new ArrayList<Alchool>();
-        for (int i = 0; i < 1000; i++) {
-            Alchool alchool = new Alchool(i);
-            alchools.add(alchool);
+        \
         }
     }
 }

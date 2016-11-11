@@ -4,7 +4,7 @@ android {
     compileSdkVersion 24
     buildToolsVersion "25.0.0"
     defaultConfig {
-        applicationId "com.example.andrea.decoviewdemo"
+        applicationId "com.example.andrea.alchoollistview"
         minSdkVersion 19
         targetSdkVersion 24
         versionCode 1
@@ -19,10 +19,6 @@ android {
     }
 }
 
-repositories {
-    maven { url "https://jitpack.io" }
-}
-
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -30,8 +26,4 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:24.2.1'
     testCompile 'junit:junit:4.12'
-
-
-    compile 'com.github.bmarrdev:android-DecoView-charting:v1.2'
-    compile 'com.marshalchen.ultimaterecyclerview:library:0.7.0'
 }

@@ -4,12 +4,15 @@ import android.graphics.Color;
 import android.graphics.PointF;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 
 import com.hookedonplay.decoviewlib.DecoView;
 import com.hookedonplay.decoviewlib.charts.SeriesItem;
+import com.hookedonplay.decoviewlib.charts.SeriesLabel;
 import com.hookedonplay.decoviewlib.events.DecoEvent;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,13 +33,13 @@ public class MainActivity extends AppCompatActivity {
                 new Subject("Sistemi", "#FF9629", 8.2f),
                 new Subject("Calcolo", "#009CFF", 7.1f),
                 new Subject("Chimica", "#0C660C", 4.2f),
+                new Subject("Sienze", "#666666", 6.2f),
                 new Subject("Fisica", "#013F38", 10f),
                 new Subject("Elettronica", "#FFC107", 4.8f)
         };
         float linewidth = 30f;
 
         setupArcView(subjectsArcView, subjects, linewidth);
-
 
 
     }
@@ -70,14 +73,38 @@ public class MainActivity extends AppCompatActivity {
                 .setDuration(2000)
                 .build());
 
-        for (int i = 0; i < subjects.length; i++) {
+        int delay = 500;
+        int duration = 500;
 
-            subjectsArcView.addEvent(new DecoEvent.Builder(subjects[i].getAvgmark())
-                    .setIndex(seriesIndex[i])
-                    .setDelay(2000)
-                    .setInterpolator(new DecelerateInterpolator())
-                    .build());
-        }
+        for (int j = 0; j < 10; j++)
+            for (int i = 0; i < subjects.length; i++) {
+
+                subjectsArcView.addEvent(new DecoEvent.Builder(subjects[i].getAvgmark())
+                        .setIndex(seriesIndex[i])
+                        .setDelay(delay)
+                        .setDuration(duration)
+                        .setInterpolator(new AccelerateInterpolator())
+                        .build());
+
+                delay += duration;
+
+                subjectsArcView.addEvent(new DecoEvent.Builder(10)
+                        .setIndex(seriesIndex[i])
+                        .setDelay(delay)
+                        .setDuration(duration)
+                        .setInterpolator(new DecelerateInterpolator())
+                        .build());
+
+                delay += duration;
+
+                subjectsArcView.addEvent(new DecoEvent.Builder(subjects[i].getAvgmark())
+                        .setIndex(seriesIndex[i])
+                        .setDelay(delay)
+                        .setDuration(duration)
+                        .setDisplayText("coseeeee")
+                        .setInterpolator(new AccelerateInterpolator())
+                        .build());
+            }
     }
 }
 

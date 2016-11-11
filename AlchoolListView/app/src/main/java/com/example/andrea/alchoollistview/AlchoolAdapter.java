@@ -18,6 +18,16 @@ public class AlchoolAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<Alchool> alchools;
 
+    private static class ViewHolder {
+        private TextView txtName;
+        private TextView txtLiter;
+
+        public ViewHolder(TextView txtName, TextView txtLiter) {
+            this.txtName = txtName;
+            this.txtLiter = txtLiter;
+        }
+    }
+
     public AlchoolAdapter(Context context, ArrayList<Alchool> alchools) {
         this.context = context;
         this.alchools = alchools;
@@ -45,20 +55,25 @@ public class AlchoolAdapter extends BaseAdapter {
 
         if (view == null) {
             LayoutInflater inflater = LayoutInflater.from(context);
-
             alchoolCell = inflater.inflate(R.layout.alchool_layout, null);
+
+            TextView txtName = (TextView) alchoolCell.findViewById(R.id.txtName);
+            TextView txtLiter = (TextView) alchoolCell.findViewById(R.id.txtLiter);
+
+            ViewHolder holder = new ViewHolder(txtName, txtLiter);
+
+            alchoolCell.setTag(holder);
 
         } else {
             alchoolCell = view;
         }
 
-        TextView txtName = (TextView) alchoolCell.findViewById(R.id.txtName);
-        TextView txtLiter = (TextView) alchoolCell.findViewById(R.id.txtLiter);
 
         Alchool alchool = getItem(i);
 
-        txtName.setText(alchool.getName());
-        txtLiter.setText(alchool.getLiter() + " lt");
+        ViewHolder viewHolder = (ViewHolder) alchoolCell.getTag();
+        viewHolder.txtName.setText(alchool.getName());
+        viewHolder.txtLiter.setText(alchool.getLiter() + " lt");
 
         return alchoolCell;
     }

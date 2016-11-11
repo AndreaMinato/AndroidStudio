@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
         AlchoolAdapter alchoolAdapter = new AlchoolAdapter(this, alchools);
         ListView listView = (ListView) findViewById(R.id.list_view);
 
-
         listView.setAdapter(alchoolAdapter);
 
     }

@@ -4,9 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-/**
- * Created by andrea on 11/25/16.
- */
 
 public class DbHelper extends SQLiteOpenHelper {
 
@@ -45,5 +42,6 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
 
+        sqLiteDatabase.execSQL(ItemsHelper.DROP_QUERY);
     }
 }

@@ -1,5 +1,7 @@
 package com.example.andrea.datasource.data;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 
 /**
@@ -12,16 +14,39 @@ public class DataSet {
 
     private static DataSet instance = null;
 
-    public static DataSet Get() {
+    public static DataSet Get(Context context) {
         if (instance == null)
-            instance = new DataSet();
+            instance = new DataSet(context);
 
         return instance;
     }
 
     ArrayList<Contact> contacts;
 
-    private DataSet() {
+    DbHelper dbHelper;
+
+    private DataSet(Context context) {
         contacts = new ArrayList<>();
+
+        dbHelper = new DbHelper(context);
     }
+
+    public ArrayList<Contact> getContacts() {
+        return contacts;
+    }
+
+    public long addContact(Contact contact) {
+        contact.setId(contacts.size() + 1);
+        contacts.add(contact);
+        return contact.getId();
+    }
+
+    public boolean removeContact(Contact contact) {
+        if (contacts.contains(contact)) {
+            contacts.remove(contact);
+            return true;
+        }
+        return false;
+    }
+
 }

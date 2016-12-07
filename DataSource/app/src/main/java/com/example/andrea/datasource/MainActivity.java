@@ -3,14 +3,16 @@ package com.example.andrea.datasource;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.andrea.datasource.data.Contact;
 import com.example.andrea.datasource.data.ContactsAdapter;
 import com.example.andrea.datasource.data.DataSet;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DialogEdit.IOnDialogSelected {
 
     DataSet dataSet;
     ContactsAdapter adapter;
@@ -23,6 +25,26 @@ public class MainActivity extends AppCompatActivity {
         dataSet = DataSet.Get(this);
 
         ListView listView = (ListView) findViewById(R.id.listView);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                DialogEdit dialogEdit = DialogEdit.getInstance("Contatto", "Modifica", dataSet.getContact(i));
+                dialogEdit.show(getSupportFragmentManager(), "DIALOGEDIT");
+
+            }
+        });
+
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            //i = posizione in lista --- l = id dell'elemento (Chiama getItemId)
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                dataSet.removeContact(l);
+                adapter.notifyDataSetChanged();
+                return true;
+            }
+        });
 
         adapter = new ContactsAdapter(this, dataSet.getContacts());
 
@@ -38,4 +60,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
+    @Override
+    public void OnButtonSelected(Contact contact) {
+        if (contact != null)
+            Toast.makeText(MainActivity.this, contact.getSurname(), Toast.LENGTH_SHORT).show();
+    }
+
 }

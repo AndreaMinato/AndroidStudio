@@ -12,8 +12,12 @@ public class Contact {
     private String name;
     private String surname;
 
+    public Contact() {
+    }
+
     public Contact(String name, String surname) {
         this.name = name;
+
         this.surname = surname;
     }
 
@@ -53,6 +57,6 @@ public class Contact {
         String name = "nome " + random.nextInt();
         String surname = "cognome " + random.nextInt();
 
-        return new Contact(name,surname);
+        return new Contact(name, surname);
     }
 }

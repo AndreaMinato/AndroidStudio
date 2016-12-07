@@ -1,6 +1,9 @@
 package com.example.andrea.datasource.data;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 
@@ -32,21 +35,67 @@ public class DataSet {
     }
 
     public ArrayList<Contact> getContacts() {
+        SQLiteDatabase database = dbHelper.getReadableDatabase();
+
+        Cursor cursor = database.query(ContactsHelper.TABLE_NAME, null, null, null, null, null, null);
+
+        while (cursor.moveToNext()) {
+            Contact contact = new Contact();
+
+            contact.setId(cursor.getLong(cursor.getColumnIndex(ContactsHelper._ID)));
+            contact.setName(cursor.getString(cursor.getColumnIndex(ContactsHelper.NAME)));
+            contact.setSurname(cursor.getString(cursor.getColumnIndex(ContactsHelper.SURNAME)));
+
+            contacts.add(contact);
+        }
+        cursor.close();
+        database.close();
+
         return contacts;
     }
 
-    public long addContact(Contact contact) {
-        contact.setId(contacts.size() + 1);
+    public Contact addContact(Contact contact) {
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
+
+        ContentValues value = new ContentValues();
+        value.put(ContactsHelper.NAME, contact.getName());
+        value.put(ContactsHelper.SURNAME, contact.getSurname());
+        //Visto che la insert ci ritorna proprio l'id del contatto inserito
+        long insertedID = database.insert(ContactsHelper.TABLE_NAME, null, value);
+
+        contact.setId(insertedID);
+
+        database.close();
+
+
+        //contact.setId(contacts.size() + 1);
         contacts.add(contact);
-        return contact.getId();
+        return contact;
+
     }
 
-    public boolean removeContact(Contact contact) {
-        if (contacts.contains(contact)) {
-            contacts.remove(contact);
-            return true;
+    public Contact getContact(int pos) {
+        return contacts.get(pos);
+
+    }
+
+    public boolean removeContact(long id) {
+
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
+
+        int rows = database.delete(ContactsHelper.TABLE_NAME, ContactsHelper._ID + " = " + id, null);
+
+        int removePosition = -1;
+        for (int i = 0; i < contacts.size(); i++) {
+            if (contacts.get(i).getId() == id) {
+                removePosition = i;
+                break;
+            }
         }
-        return false;
+        if (removePosition >= 0)
+            contacts.remove(removePosition);
+
+        return (rows > 0);
     }
 
 }

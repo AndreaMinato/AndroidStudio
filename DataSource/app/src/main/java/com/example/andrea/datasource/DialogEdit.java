@@ -39,7 +39,7 @@ public class DialogEdit extends DialogFragment {
         editName.setText(getArguments().getString(NAME));
         editSurname.setText(getArguments().getString(SURNAME));
 
-        builder.setTitle(getArguments().getString(TITLE) + getArguments().getLong(ID))
+        builder.setTitle(getArguments().getString(TITLE) + " " + getArguments().getLong(ID))
                 .setMessage(getArguments().getString(TEXT))
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override

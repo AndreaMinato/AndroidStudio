@@ -1,5 +1,6 @@
 package com.example.andrea.datasource.data;
 
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -25,6 +26,14 @@ public class Contact {
         this.id = id;
         this.name = name;
         this.surname = surname;
+    }
+
+    @Override
+    public boolean equals(Object contact) {
+        if (contact instanceof Contact) {
+            return this.getId() == ((Contact) contact).getId();
+        } else
+            return false;
     }
 
     public long getId() {

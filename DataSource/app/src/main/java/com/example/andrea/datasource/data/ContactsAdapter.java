@@ -22,12 +22,12 @@ public class ContactsAdapter extends BaseAdapter {
 
 
     private static class ViewHolder {
-        private TextView txtId;
+        //private TextView txtId;
         private TextView txtName;
         private TextView txtSurname;
 
-        public ViewHolder(TextView txtId, TextView txtName, TextView txtSurname) {
-            this.txtId = txtId;
+        public ViewHolder(/*TextView txtId,*/ TextView txtName, TextView txtSurname) {
+            // this.txtId = txtId;
             this.txtName = txtName;
             this.txtSurname = txtSurname;
         }
@@ -48,11 +48,11 @@ public class ContactsAdapter extends BaseAdapter {
             LayoutInflater inflater = LayoutInflater.from(context);
             cell = inflater.inflate(R.layout.cell, null);
 
-            TextView txtId = (TextView) cell.findViewById(R.id.txtId);
+            //TextView txtId = (TextView) cell.findViewById(R.id.txtId);
             TextView txtName = (TextView) cell.findViewById(R.id.txtName);
             TextView txtSurname = (TextView) cell.findViewById(R.id.txtxSurname);
 
-            ViewHolder holder = new ViewHolder(txtId, txtName, txtSurname);
+            ViewHolder holder = new ViewHolder(txtName, txtSurname);
 
             cell.setTag(holder);
 
@@ -64,7 +64,7 @@ public class ContactsAdapter extends BaseAdapter {
         Contact contact = getItem(i);
 
         ViewHolder viewHolder = (ViewHolder) cell.getTag();
-        viewHolder.txtId.setText("" + contact.getId());
+        //viewHolder.txtId.setText("" + contact.getId());
         viewHolder.txtName.setText(contact.getName());
         viewHolder.txtSurname.setText(contact.getSurname());
 

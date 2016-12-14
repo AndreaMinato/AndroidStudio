@@ -12,7 +12,7 @@ import com.example.andrea.datasource.data.Contact;
 import com.example.andrea.datasource.data.ContactsAdapter;
 import com.example.andrea.datasource.data.DataSet;
 
-public class MainActivity extends AppCompatActivity implements DialogEdit.IOnDialogSelected {
+public class MainActivity extends AppCompatActivity implements DialogEdit.IOnDialogSelected, DialogDelete.IOnDialogSelected {
 
     DataSet dataSet;
     ContactsAdapter adapter;
@@ -40,8 +40,9 @@ public class MainActivity extends AppCompatActivity implements DialogEdit.IOnDia
             @Override
             //i = posizione in lista --- l = id dell'elemento (Chiama getItemId)
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                dataSet.removeContact(l);
-                adapter.notifyDataSetChanged();
+
+                DialogDelete dialogDelete = DialogDelete.getInstance(l);
+                dialogDelete.show(getFragmentManager(), "DIALOGDELETE");
                 return true;
             }
         });
@@ -63,9 +64,18 @@ public class MainActivity extends AppCompatActivity implements DialogEdit.IOnDia
 
 
     @Override
+    public void OnDeleteSelected(long l) {
+        dataSet.removeContact(l);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void OnButtonSelected(Contact contact) {
         if (contact != null)
-            Toast.makeText(MainActivity.this, contact.getSurname(), Toast.LENGTH_SHORT).show();
+            dataSet.updateContact(contact);
+
+
+        //Toast.makeText(MainActivity.this, contact.getSurname(), Toast.LENGTH_SHORT).show();
     }
 
 }

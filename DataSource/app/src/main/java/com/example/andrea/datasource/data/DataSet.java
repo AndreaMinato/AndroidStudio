@@ -39,6 +39,7 @@ public class DataSet {
 
         Cursor cursor = database.query(ContactsHelper.TABLE_NAME, null, null, null, null, null, null);
 
+        contacts.clear();
         while (cursor.moveToNext()) {
             Contact contact = new Contact();
 
@@ -70,6 +71,25 @@ public class DataSet {
 
         //contact.setId(contacts.size() + 1);
         contacts.add(contact);
+        return contact;
+
+    }
+
+
+    public Contact updateContact(Contact contact) {
+
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
+
+        ContentValues value = new ContentValues();
+        value.put(ContactsHelper.NAME, contact.getName());
+        value.put(ContactsHelper.SURNAME, contact.getSurname());
+
+        database.update(ContactsHelper.TABLE_NAME, value, ContactsHelper._ID + '=' + contact.getId(), null);
+
+        contacts.set(contacts.indexOf(contact), contact);
+
+        database.close();
+
         return contact;
 
     }

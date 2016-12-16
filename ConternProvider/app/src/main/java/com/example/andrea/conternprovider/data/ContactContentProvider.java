@@ -10,6 +10,8 @@ import android.database.sqlite.SQLiteQuery;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.support.v4.text.TextUtilsCompat;
+import android.text.TextUtils;
 
 
 public class ContactContentProvider extends ContentProvider {
@@ -88,25 +90,71 @@ public class ContactContentProvider extends ContentProvider {
         long id = 0;
         switch (uryType) {
             case CONTACTS:
-
                 id = database.insert(ContactsHelper.TABLE_NAME, null, contentValues);
-                //queryBuilder.setTables(ContactsHelper.TABLE_NAME);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }
         database.close();
         getContext().getContentResolver().notifyChange(uri, null);
-        return Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH_CONTACTS + "/" + id);
+        if (id >= 0)
+            return Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH_CONTACTS + "/" + id);
+        else
+            return null;
     }
 
     @Override
-    public int delete(Uri uri, String s, String[] strings) {
-        return 0;
+    public int delete(Uri uri, String selection, String[] selectionArgs) {
+        int uryType = URI_MATCHER.match(uri);
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
+        int rowsDeleted = 0;
+        switch (uryType) {
+            case CONTACTS:
+                rowsDeleted = database.delete(ContactsHelper.TABLE_NAME, selection, selectionArgs);
+                break;
+            case CONTACTS_ID:
+                String id = uri.getLastPathSegment();
+                if (TextUtils.isEmpty(selection)) {
+                    rowsDeleted = database.delete(ContactsHelper.TABLE_NAME, ContactsHelper._ID + "=" + id, null);
+                } else {
+                    rowsDeleted = database.delete(ContactsHelper.TABLE_NAME, ContactsHelper._ID + "=" + id + " and " + selection, selectionArgs);
+
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown URI: " + uri);
+        }
+        database.close();
+        getContext().getContentResolver().notifyChange(uri, null);
+        return rowsDeleted;
     }
 
     @Override
-    public int update(Uri uri, ContentValues contentValues, String s, String[] strings) {
-        return 0;
+    public int update(Uri uri, ContentValues contentValues, String selection, String[] selectionArgs) {
+
+        int uryType = URI_MATCHER.match(uri);
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
+        int rowsUpdated = 0;
+
+        switch (uryType) {
+            case CONTACTS:
+                rowsUpdated = database.update(ContactsHelper.TABLE_NAME, contentValues, selection, selectionArgs);
+                break;
+            case CONTACTS_ID:
+                String id = uri.getLastPathSegment();
+                if (TextUtils.isEmpty(selection)) {
+                    rowsUpdated = database.update(ContactsHelper.TABLE_NAME, contentValues, ContactsHelper._ID + "=" + id, null);
+                } else {
+                    rowsUpdated = database.update(ContactsHelper.TABLE_NAME, contentValues, ContactsHelper._ID + "=" + id + " and " + selection, selectionArgs);
+
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown URI: " + uri);
+        }
+        database.close();
+        getContext().getContentResolver().notifyChange(uri, null);
+
+        return rowsUpdated;
     }
 }

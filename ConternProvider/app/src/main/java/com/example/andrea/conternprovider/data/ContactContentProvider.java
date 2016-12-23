@@ -19,9 +19,10 @@ public class ContactContentProvider extends ContentProvider {
     private static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/contacts";
     private static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/contacts";
 
+    private static final String CONTENT = "content://";
     private static final String AUTHORITY = "com.example.andrea_contentProvider";
     private static final String BASE_PATH_CONTACTS = "contacts";
-    private static final Uri CONTACTS_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH_CONTACTS);
+    public static final Uri CONTACTS_URI = Uri.parse(CONTENT + AUTHORITY + "/" + BASE_PATH_CONTACTS);
 
     private static final int CONTACTS = 10;
     private static final int CONTACTS_ID = 20;
@@ -70,7 +71,8 @@ public class ContactContentProvider extends ContentProvider {
         SQLiteDatabase database = dbHelper.getReadableDatabase();
         Cursor cursor = queryBuilder.query(database, projection, selection, selectionArgs, null, null, sortOrder);
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
-        database.close();
+        //Non serve chiudere il db perché lo chiuderà il ContentProvider
+        //database.close();
         return cursor;
     }
 
@@ -95,10 +97,10 @@ public class ContactContentProvider extends ContentProvider {
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }
-        database.close();
+        //database.close();
         getContext().getContentResolver().notifyChange(uri, null);
         if (id >= 0)
-            return Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH_CONTACTS + "/" + id);
+            return Uri.parse(CONTENT + AUTHORITY + "/" + BASE_PATH_CONTACTS + "/" + id);
         else
             return null;
     }
@@ -124,7 +126,7 @@ public class ContactContentProvider extends ContentProvider {
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }
-        database.close();
+        //database.close();
         getContext().getContentResolver().notifyChange(uri, null);
         return rowsDeleted;
     }
@@ -152,7 +154,7 @@ public class ContactContentProvider extends ContentProvider {
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }
-        database.close();
+        //database.close();
         getContext().getContentResolver().notifyChange(uri, null);
 
         return rowsUpdated;

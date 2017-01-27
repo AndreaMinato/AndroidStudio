@@ -13,13 +13,14 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.example.andrea.conternprovider.data.Contact;
 import com.example.andrea.conternprovider.data.ContactContentProvider;
 import com.example.andrea.conternprovider.data.ContactCursorAdapter;
 import com.example.andrea.conternprovider.data.ContactsHelper;
 
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, DialogDelete.DialogDeleteInterface, DialogEdit.DialogEditInterface {
 
     ContactCursorAdapter adapter;
 
@@ -40,7 +41,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                deleteContact(l);
+                //deleteContact(l);
+                DialogDelete dialogDelete = DialogDelete.getInstance(l);
+                dialogDelete.show(getFragmentManager(), "DIALOGDELETE");
+
                 return true;
             }
         });
@@ -49,7 +53,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                updateContact(l);
+                //updateContact(l);
+                DialogEdit dialogEdit = DialogEdit.getInstance("Contatto", "Modifica", l);
+                dialogEdit.show(getSupportFragmentManager(), "DIALOGEDIT");
             }
         });
 
@@ -72,7 +78,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         values.put(ContactsHelper.NAME, "nome " + rand);
         values.put(ContactsHelper.SURNAME, "cognome " + rand);
 
-        getContentResolver().update(uriToUpdate,values,null,null);
+        getContentResolver().update(uriToUpdate, values, null, null);
+    }
+
+    private void updateContact(long itemId, ContentValues values) {
+        Uri uriToUpdate = Uri.parse(ContactContentProvider.CONTACTS_URI + "/" + itemId);
+        getContentResolver().update(uriToUpdate, values, null, null);
     }
 
     private void addContact() {
@@ -109,5 +120,22 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         adapter.swapCursor(null);
+    }
+
+    @Override
+    public void OnDeleteSelected(long l) {
+        if (l >= 0)
+            deleteContact(l);
+    }
+
+    @Override
+    public void OnEditSelected(Contact contact) {
+        if (contact != null) {
+            ContentValues values = new ContentValues();
+            values.put(ContactsHelper.NAME, contact.getName());
+            values.put(ContactsHelper.SURNAME, contact.getSurname());
+            updateContact(contact.getId(), values);
+        }
+
     }
 }

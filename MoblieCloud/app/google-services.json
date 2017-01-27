@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "88491949431",
+    "firebase_url": "https://mobilecloud-1481705952307.firebaseio.com",
+    "project_id": "mobilecloud-1481705952307",
+    "storage_bucket": "mobilecloud-1481705952307.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:88491949431:android:6a5a5bf1b5ca33e6",
+        "android_client_info": {
+          "package_name": "com.example.andrea.mobilecloud"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "88491949431-odp5eur3e84m4hgro71190o3u89qdb8m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.andrea.mobilecloud",
+            "certificate_hash": "0D7FA077D7E346ED2296F34EC69825A78E28E75E"
+          }
+        },
+        {
+          "client_id": "88491949431-3v2kd84jp1jg4d1666cs9un6k88o4sv3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2wJxicE1Ul7WBuMc8wtJsdTd-E4rlOu4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "88491949431-3v2kd84jp1jg4d1666cs9un6k88o4sv3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

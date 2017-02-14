@@ -10,27 +10,45 @@
     tools:context="minato.com.threading.MainActivity">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/txt"
-        android:text="Hello World!" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Conto" />
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
         android:id="@+id/txtNum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/txt"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="52dp"
+        android:ems="10"
+        android:gravity="end"
+        android:inputType="number"
         android:text="0" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Start"
         android:id="@+id/btnStart"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Start" />
+
+    <Button
+        android:id="@+id/btnStop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnStart"
+        android:layout_centerHorizontal="true"
+        android:text="Stop" />
+
+    <Button
+        android:id="@+id/btnResume"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnStop"
+        android:layout_centerHorizontal="true"
+        android:text="Resume" />
 </RelativeLayout>

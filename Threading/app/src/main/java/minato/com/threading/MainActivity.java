@@ -11,6 +11,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity implements TimerFragment.IOnTimerUpdate {
     TextView txt;
     EditText num;
+    Button btnResume;
     private static final String TIMER_FRAGMENT = "Time";
     private static final String TAG = "MAIN";
     TimerFragment fragment;
@@ -25,48 +26,77 @@ public class MainActivity extends AppCompatActivity implements TimerFragment.IOn
 
         num = (EditText) findViewById(R.id.txtNum);
 
-
-
-        Button btn = (Button) findViewById(R.id.btnStart);
-        if (btn != null)
-            btn.setOnClickListener(new View.OnClickListener() {
+        btnResume = (Button) findViewById(R.id.btnResume);
+        if (btnResume != null)
+            btnResume.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    fragment = (TimerFragment) getSupportFragmentManager().findFragmentByTag(TIMER_FRAGMENT);
-                    if (fragment == null) {
-                        int value = Integer.parseInt(num.getText().toString());
-                        Log.d(TAG, "onCreate: " + value);
-                        if (value == 0) {
-                            fragment = TimerFragment.getInstance();
-                            getSupportFragmentManager().beginTransaction()
-                                    .add(fragment, TIMER_FRAGMENT)
-                                    .commit();
-                        } else {
-                            fragment = TimerFragment.getInstance(value);
-                            getSupportFragmentManager().beginTransaction()
-                                    .add(fragment, TIMER_FRAGMENT)
-                                    .commit();
-                        }
-                    }
-                    getSupportFragmentManager().beginTransaction()
-                            .remove(fragment);
-                    //fragment.start();
+
+                    int value = Integer.parseInt(txt.getText().toString());
+                    inflateAsyncFragment(value);
                 }
             });
-    }
 
-    private void updateText(final int aValue) {
-        runOnUiThread(new Runnable() {
+        Button btnStart = (Button) findViewById(R.id.btnStart);
+        if (btnStart != null)
+            btnStart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int value = Integer.parseInt(num.getText().toString());
+                    inflateAsyncFragment(value);
+                }
+            });
+
+
+        Button btnStop = (Button) findViewById(R.id.btnStop);
+        btnStop.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
+            public void onClick(View view) {
+                destroyAsynctFragment();
 
-                txt.setText("" + aValue);
             }
         });
     }
 
+    private void destroyAsynctFragment() {
+        fragment = (TimerFragment) getSupportFragmentManager().findFragmentByTag(TIMER_FRAGMENT);
+        if (fragment != null) {
+            getSupportFragmentManager().beginTransaction()
+                    .remove(fragment)
+                    .commit();
+        }
+    }
+
+    private void inflateAsyncFragment(int value) {
+        fragment = (TimerFragment) getSupportFragmentManager().findFragmentByTag(TIMER_FRAGMENT);
+        if (fragment == null) {
+
+            Log.d(TAG, "onCreate: " + value);
+            if (value == 0) {
+                fragment = TimerFragment.getInstance();
+                getSupportFragmentManager().beginTransaction()
+                        .add(fragment, TIMER_FRAGMENT)
+                        .commit();
+            } else {
+                fragment = TimerFragment.getInstance(value);
+                getSupportFragmentManager().beginTransaction()
+                        .add(fragment, TIMER_FRAGMENT)
+                        .commit();
+            }
+        }
+    }
+
+
+    private void updateText(String aValue) {
+
+        txt.setText(aValue);
+    }
+
     @Override
     public void timerUpdate(int aValue) {
-        updateText(aValue);
+        if (aValue >= 0)
+            updateText("" + aValue);
+        if (aValue == 0)
+            destroyAsynctFragment();
     }
 }

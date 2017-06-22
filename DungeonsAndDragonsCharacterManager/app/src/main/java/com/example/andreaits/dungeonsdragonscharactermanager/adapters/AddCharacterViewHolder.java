@@ -1,4 +1,4 @@
-package com.example.andreaits.dungeonsdragonscharactermanager.adapters;
+package com.example.andreaits.dungeonsdragonscharactermanager.Adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

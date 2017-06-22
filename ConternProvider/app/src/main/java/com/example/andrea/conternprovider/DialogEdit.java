@@ -108,9 +108,7 @@ public class DialogEdit extends DialogFragment {
         Bundle bundle = new Bundle();
         bundle.putString(TITLE, title);
         bundle.putString(TEXT, text);
-        //bundle.putString(NAME, contact.getName());
-        //bundle.putString(SURNAME, contact.getSurname());
-        bundle.putLong(ID,contactId);
+        bundle.putLong(ID, contactId);
         dialog.setArguments(bundle);
         return dialog;
     }

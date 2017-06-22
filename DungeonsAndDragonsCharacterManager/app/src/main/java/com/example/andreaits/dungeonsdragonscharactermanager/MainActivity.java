@@ -1,28 +1,31 @@
 package com.example.andreaits.dungeonsdragonscharactermanager;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.andreaits.dungeonsdragonscharactermanager.adapters.CharactersAdapters;
-import com.example.andreaits.dungeonsdragonscharactermanager.database.Character;
-import com.example.andreaits.dungeonsdragonscharactermanager.database.Race;
+import com.example.andreaits.dungeonsdragonscharactermanager.Adapters.CharactersAdapters;
+import com.example.andreaits.dungeonsdragonscharactermanager.Dialogs.DialogAddCharacter;
+import com.example.andreaits.dungeonsdragonscharactermanager.Dialogs.DialogAddRace;
+import com.example.andreaits.dungeonsdragonscharactermanager.Models.Character;
+import com.example.andreaits.dungeonsdragonscharactermanager.Models.Race;
+import com.example.andreaits.dungeonsdragonscharactermanager.Utils.Utils;
 
 import java.util.ArrayList;
 
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
-public class MainActivity extends AppCompatActivity {
+/**
+ * Created by andreaits on 03/03/17.
+ */
+
+public class MainActivity extends RealmActivity implements CharactersAdapters.AddCharacterInterface, DialogAddRace.SaveCharacterInterface {
 
     private static final String TAG = "MainActivity";
 
     private CharactersAdapters charactersAdapters;
     private RecyclerView recyclerView;
     private GridLayoutManager layoutManager;
-    private Realm realm;
 
     private ArrayList<Character> characters;
 
@@ -30,14 +33,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Realm.init(getApplicationContext());
-
-        Realm.setDefaultConfiguration(new RealmConfiguration.Builder()
-                .name("db.realm")
-                .build());
-        realm = Realm.getDefaultInstance();
-
 
         recyclerView = (RecyclerView) findViewById(R.id.charactersList);
 
@@ -52,14 +47,6 @@ public class MainActivity extends AppCompatActivity {
         layoutManager = new GridLayoutManager(this, 1);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(charactersAdapters);
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        realm.close();
     }
 
     private void create() {
@@ -77,5 +64,23 @@ public class MainActivity extends AppCompatActivity {
         realm.copyToRealm(character);
 
         realm.commitTransaction();
+    }
+
+    @Override
+    public void addCharacter() {
+        DialogAddCharacter dialogAddCharacter = DialogAddCharacter.getInstance(getString(R.string.newCharacter), getString(R.string.setCharacterInfo));
+        dialogAddCharacter.show(getSupportFragmentManager(), DialogAddCharacter.TAG);
+
+    }
+
+    @Override
+    public void onSaveCharacter(Character character) {
+        if (character != null) {
+            character.setLevel(Utils.calculateLevel(character.getExp()));
+            character.setProficiencyBonus(Utils.calculateProficiencyBonus(character.getLevel()));
+            realm.beginTransaction();
+            realm.copyToRealm(character);
+            realm.commitTransaction();
+        }
     }
 }

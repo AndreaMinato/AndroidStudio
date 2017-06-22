@@ -1,20 +1,16 @@
-package com.example.andreaits.dungeonsdragonscharactermanager.adapters;
+package com.example.andreaits.dungeonsdragonscharactermanager.Adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.andreaits.dungeonsdragonscharactermanager.R;
-import com.example.andreaits.dungeonsdragonscharactermanager.database.Character;
+import com.example.andreaits.dungeonsdragonscharactermanager.Models.Character;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
@@ -29,24 +25,38 @@ public class CharactersAdapters extends RealmRecyclerViewAdapter<Character, Recy
     private static final int LIST_TYPE = 1;
     private static final int ADD_TYPE = 2;
 
-    public CharactersAdapters(@NonNull Context context, @Nullable OrderedRealmCollection<Character> data, boolean autoUpdate) {
-        super(context, data, autoUpdate);
+    public interface AddCharacterInterface {
+        void addCharacter();
+    }
 
+    private AddCharacterInterface listener = new AddCharacterInterface() {
+        @Override
+        public void addCharacter() {
+
+        }
+    };
+
+    public CharactersAdapters(@NonNull Context context, @Nullable OrderedRealmCollection<Character> data, boolean autoUpdate) {
+        super(data, autoUpdate);
+
+        if (context instanceof AddCharacterInterface) {
+            listener = (AddCharacterInterface) context;
+        }
 
     }
 
     @Override
-    public CharacterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = null;
 
-        if (viewType == 1) {
-            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.character_cell, parent, false);
+        if (viewType == LIST_TYPE) {
+            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_character, parent, false);
+            return new CharacterViewHolder(v);
+        } else //(viewType == ADD_TYPE)
+        {
+            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_add_character, parent, false);
+            return new AddCharacterViewHolder(v);
         }
-        if (viewType == 2) {
-            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.add_character_cell, parent, false);
-        }
-
-        return new CharacterViewHolder(v);
 
 
     }
@@ -58,11 +68,14 @@ public class CharactersAdapters extends RealmRecyclerViewAdapter<Character, Recy
 
     @Override
     public int getItemViewType(int position) {
-        if (position == getData().size() - 1) {
-            return ADD_TYPE;
+        int type;
+        if (position == getData().size()) {
+            type = ADD_TYPE;
+        } else {
+            type = LIST_TYPE;
         }
 
-        return LIST_TYPE;
+        return type;
     }
 
     @Override
@@ -71,17 +84,17 @@ public class CharactersAdapters extends RealmRecyclerViewAdapter<Character, Recy
             CharacterViewHolder characterViewHolder = (CharacterViewHolder) holder;
             Character character = getItem(position);
             characterViewHolder.txtName.setText(character.getName());
-            characterViewHolder.txtRace.setText("" + character.getRace().getName());
-            //holder.txtClass.setText("" + character.getClass_id());
-            characterViewHolder.txtLevel.setText("" + character.getLevel());
-            characterViewHolder.txtExp.setText("" + character.getExp());
+            characterViewHolder.txtRace.setText(character.getRace().getName());
+            characterViewHolder.txtClass.setText(character.getCharacterClass());
+            characterViewHolder.txtLevel.setText("Lev: " + character.getLevel());
+            characterViewHolder.txtExp.setText("Exp: " + character.getExp());
         }
         if (holder instanceof AddCharacterViewHolder) {
             AddCharacterViewHolder addCharacterViewHolder = (AddCharacterViewHolder) holder;
             addCharacterViewHolder.btnAddCharacter.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "Toaaaaaast", Toast.LENGTH_SHORT).show();
+                    listener.addCharacter();
                 }
             });
         }

@@ -1,3 +1,35 @@
 <resources>
     <string name="app_name">Dungeons and Dragons Character Manager</string>
+
+    <string name="age">Age</string>
+    <string name="name">Name</string>
+    <string name="height">Height</string>
+    <string name="weight">Weight</string>
+    <string name="exp">Exp.</string>
+    <string name="level">Level</string>
+    <string name="alignement">Alignement</string>
+    <string name="baseInizitiative">Base Inizitiative</string>
+    <string name="armorClass">Armor Class</string>
+    <string name="race">Race</string>
+    <string name="raceName">Race Name</string>
+    <string name="className">Class Name</string>
+
+
+    <string name="strenght">Strenght</string>
+    <string name="dexterity">Dexterity</string>
+    <string name="constitution">Constitution</string>
+    <string name="charisma">Charisma</string>
+    <string name="wisdom">Wisdom</string>
+    <string name="intelligence">Intelligence</string>
+
+
+
+
+    <string name="newCharacter">Create a new character</string>
+    <string name="setCharacterInfo">Set the your character\'s info</string>
+    <string name="newRace">Create a new Race</string>
+    <string name="setRaceStats">Set your race stats</string>
+
+
+
 </resources>

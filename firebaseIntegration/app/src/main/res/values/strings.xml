@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">firebaseIntegration</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="sign_in_cancelled">Sign In Cancelled</string>
+    <string name="unknown_error">Unknown Error</string>
+    <string name="error_no_network">No Network</string>
+    <string name="deletion_error">Errore nell\'eliminazione</string>
+    <string name="logout_error">Errore nel logout</string>
+
+
+</resources>

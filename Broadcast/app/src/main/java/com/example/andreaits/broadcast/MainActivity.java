@@ -4,10 +4,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.ConnectivityManager;
-import android.support.v4.net.ConnectivityManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -15,15 +16,8 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView txtLabel;
     int count = 0;
-    MyBroadcastReciver broadcastReciver = new MyBroadcastReciver();
 
-    BroadcastReceiver receiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            count++;
-            txtLabel.append(count + "\n");
-        }
-    };
+    BroadcastReceiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +26,37 @@ public class MainActivity extends AppCompatActivity {
 
         txtLabel = (TextView) findViewById(R.id.txtlabel);
 
+        txtLabel.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                txtLabel.setText("");
+                return false;
+            }
+        });
 
-//        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-//        intentFilter.addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                count++;
+                String log = "Action: " + intent.getAction() + "\n" + "URI: " + intent.toUri(Intent.URI_INTENT_SCHEME) + "\n";
+//
+//            Bundle extras = intent.getExtras();
+//
+//            KeyEvent keyEvent = null;
+//            if (extras != null) {
+//                keyEvent = extras.getParcelable(Intent.EXTRA_KEY_EVENT);
+//            }
+//
+//            if (keyEvent != null) {
+//                log += keyEvent.toString();
+//            }
 
-        IntentFilter intentFilter = new IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+                txtLabel.append(count + " - " + log + "\n");
+            }
+        };
+
+        IntentFilter intentFilter = new IntentFilter(Intent.ACTION_MEDIA_BUTTON);
+        intentFilter.setPriority(999);
 
         registerReceiver(receiver, intentFilter);
 
@@ -48,5 +68,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(receiver);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Log.i(TAG, "onKeyDown() called with: keyCode = [" + keyCode + "], event = [" + event + "]");
+        return super.onKeyDown(keyCode, event);
     }
 }

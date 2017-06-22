@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements TimerFragment.IOnTimerUpdate {
+
+
     TextView txt;
     EditText num;
     Button btnResume;

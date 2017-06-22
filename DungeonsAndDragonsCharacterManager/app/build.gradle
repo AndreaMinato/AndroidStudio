@@ -5,7 +5,7 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.example.andreaits.dungeonsdragonscharactermanager"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -25,7 +25,10 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.1.1'
-    compile 'io.realm:android-adapters:1.4.0'
+    compile 'io.realm:android-adapters:2.0.0'
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:recyclerview-v7:25.1.1'
+    compile group: 'com.github.travijuu', name: 'numberpicker', version: '1.0.5'
+
+    compile 'com.android.support:design:25.2.0'
 }

@@ -3,7 +3,9 @@ package com.example.andreaits.broadcast;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.Toast;
 
 /**
@@ -15,14 +17,21 @@ public class MyBroadcastReciver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Action: " + intent.getAction() + "\n");
-        stringBuilder.append("URI: " + intent.toUri(Intent.URI_INTENT_SCHEME).toString() + "\n");
-        String log = stringBuilder.toString();
-        Log.d(TAG, log);
+        String log = "Action: " + intent.getAction() + "\n" + "URI: " + intent.toUri(Intent.URI_INTENT_SCHEME) + "\n";
+
+        Bundle extras = intent.getExtras();
+
+        KeyEvent keyEvent = null;
+        if (extras != null) {
+            keyEvent = extras.getParcelable(Intent.EXTRA_KEY_EVENT);
+        }
+
+        if (keyEvent != null) {
+            log += keyEvent.toString();
+        }
+
 
         Toast.makeText(context, log, Toast.LENGTH_SHORT).show();
     }
-
 
 }

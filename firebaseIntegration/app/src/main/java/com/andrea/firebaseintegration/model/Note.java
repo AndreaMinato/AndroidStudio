@@ -38,6 +38,12 @@ public class Note {
         cloudSketchExists = aCloudSketchExists;
     }
 
+    public Note(String aNoteId, String aTitle, String aContent) {
+        noteId = aNoteId;
+        title = aTitle;
+        content = aContent;
+    }
+
     public String getNoteId() {
         return noteId;
     }

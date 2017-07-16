@@ -9,4 +9,8 @@
     <string name="logout_error">Errore nel logout</string>
 
 
+
+
+
+    <bool name="showDetail">false</bool>
 </resources>

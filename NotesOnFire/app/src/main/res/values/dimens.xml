@@ -1,0 +1,8 @@
+<resources>
+
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="android_margin">16dp</dimen>
+    <dimen name="card_padding">8dp</dimen>
+    <dimen name="fab_icon_size">24dp</dimen>
+    <dimen name="margin_8">8dp</dimen>
+</resources>

@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Calcolo Medico</string>
+    <string name="CPP">CCP</string>
+    <string name="AT">AT III</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="concentrati_di_complesso_protrombinico">Complesso Protombrinico 3 Fattori</string>
+    <string name="anti_trombina_3">Anti Trombina III</string>
+    <string name="inserire_peso">Inserire il peso</string>
+    <string name="inserire_livello_desiderato">Inserire il livello desiderato</string>
+    <string name="inserire_attivita_dosata">Inserire l\'attività dosata</string>
+    <string name="inr_value">Valore INR</string>
+    <string name="result_title">Somministrare:</string>
+
+
+    <string name="peso">Peso:</string>
+    <string name="attivita">Attività:</string>
+    <string name="livello">Livello:</string>
+    <string name="calcola">Calcola</string>
+
+
+    <string name="under_two">2-</string>
+    <string name="between_2_4">2.1 – 3.9</string>
+    <string name="between_4_6">4.0 – 5.9</string>
+    <string name="over_6">6+</string>
+</resources>

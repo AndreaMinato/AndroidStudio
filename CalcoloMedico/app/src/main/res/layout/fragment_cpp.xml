@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+
+    <TextView
+        android:id="@+id/txtPesoCpptTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/peso"/>
+    <EditText
+        android:id="@+id/txtPesoCpp"
+        android:layout_below="@+id/txtPesoCpptTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/inserire_peso"
+        android:inputType="numberDecimal"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtPesoCpp"
+        android:gravity="center"
+        android:text="@string/result_title"
+        android:paddingTop="10dp"
+        android:id="@+id/txtResultTitleCpp"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+
+    <TextView
+        android:id="@+id/txtResultCpp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtResultTitleCpp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:paddingBottom="20dp"
+        android:paddingTop="10dp"
+        android:text="..."
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtResultCpp"
+        android:gravity="center"
+        android:text="@string/inr_value"
+        android:id="@+id/txtINR"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/txtINR"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnUnder2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:text="@string/under_two"/>
+
+        <Button
+            android:id="@+id/btnBetween_2_4"
+            android:layout_width="wrap_content"
+
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:text="@string/between_2_4"/>
+
+        <Button
+            android:id="@+id/btnBetween_4_6"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:text="@string/between_4_6"/>
+
+        <Button
+            android:id="@+id/btnOver6"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:text="@string/over_6"/>
+    </RadioGroup>
+</RelativeLayout>

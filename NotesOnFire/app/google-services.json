@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "329170830433",
+    "firebase_url": "https://notesonfire-c18ef.firebaseio.com",
+    "project_id": "notesonfire-c18ef",
+    "storage_bucket": "notesonfire-c18ef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:329170830433:android:60a4422529c0ff80",
+        "android_client_info": {
+          "package_name": "com.andrea.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "329170830433-ndriknhthrjd8bsnmu6t9k2gn8c8lg6a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.andrea.myapplication",
+            "certificate_hash": "0d7fa077d7e346ed2296f34ec69825a78e28e75e"
+          }
+        },
+        {
+          "client_id": "329170830433-6moemdpsoqsgmt7rq3tuu7n63sheh4td.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlC-ZMly9Sb8S7bw4X2HVjUvGLlXWihRQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "329170830433-6moemdpsoqsgmt7rq3tuu7n63sheh4td.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

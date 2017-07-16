@@ -8,11 +8,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.andrea.firebaseintegration.model.Note;
 import com.andrea.firebaseintegration.model.User;
 import com.andrea.firebaseintegration.utils.Constants;
 import com.firebase.ui.auth.AuthUI;
@@ -23,6 +25,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -35,12 +42,17 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 
 import java.util.Arrays;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = "MainActivity";
 
     private static final int SIGN_IN_REQUEST_CODE = 100;
     FirebaseUser mFirebaseUser;
     FirebaseAuth mFirebaseAuth;
+    FirebaseDatabase mDatabase;
+    DatabaseReference mReference;
     User mCurrentUser;
 
     Toolbar toolbar;
@@ -58,8 +70,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                addNote();
             }
         });
 
@@ -67,15 +78,40 @@ public class MainActivity extends AppCompatActivity {
 
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
+        mDatabase = FirebaseDatabase.getInstance();
+        mReference = mDatabase.getReference(mFirebaseUser.getUid());
+
+        mReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot aDataSnapshot) {
+                Note value = aDataSnapshot.getValue(Note.class);
+                Log.d(TAG, "Value is: " + value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError aDatabaseError) {
+                Log.w(TAG, "Failed to read value.", aDatabaseError.toException());
+            }
+        });
+
         if (mFirebaseUser == null) {
             login();
         } else {
-            mCurrentUser = new User(mFirebaseUser.getDisplayName(), mFirebaseUser.getPhotoUrl().toString(), mFirebaseUser.getEmail());
+            mCurrentUser = new User(mFirebaseUser.getDisplayName(), "", mFirebaseUser.getEmail());
         }
         initNavigationDrawer(savedInstanceState);
     }
 
+    private void addNote() {
+        Note vNote = new Note(UUID.randomUUID().toString(), "TITOLO", "Content");
 
+        DatabaseReference vReference = mReference.child(vNote.getNoteId());
+        vReference.setValue(vNote);
+
+    }
+
+
+    //region Drawer
     private void initNavigationDrawer(Bundle savedInstanceState) {
         if (mCurrentUser == null) {
             mCurrentUser = new User("Anonymouse", "", "test@test.it");
@@ -155,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 })
+                .withSavedInstance(savedInstanceState)
                 .build();
 
 
@@ -176,7 +213,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+    //endregion
 
+    //region Account
     private void login() {
         startActivityForResult(AuthUI.getInstance()
                         .createSignInIntentBuilder()
@@ -211,6 +250,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
+    //endregion
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
